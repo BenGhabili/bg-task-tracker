@@ -1,15 +1,38 @@
-import React, { useState } from 'react';
+import React, {useContext, useState} from 'react';
+import { TaskContext } from '../context/TaskContext';
 
 
 const TaskAdder: React.FC = () => {
+  const taskContext = useContext(TaskContext);
+
+  if (!taskContext) {
+    throw new Error('No task context');
+  }
+
+  const { addTask } = taskContext;
+
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [priority, setPriority] = useState<'Low' | 'Medium' | 'High'>('Low');
 
+  const resetFields = () => {
+    setTitle('');
+    setDescription('');
+    setPriority('Low');
+  };
+
+  const handleAdd = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    addTask({ title, description, priority });
+
+    resetFields();
+  };
+
   return (
     <div style={{ width: '200px', padding: '1rem', borderRight: '1px solid #ccc' }}>
       <h2>Add Task</h2>
-      <form>
+      <form onSubmit={handleAdd}>
         <div>
           <label>Title: </label>
           <input
