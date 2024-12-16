@@ -1,13 +1,19 @@
 import React from 'react';
+import styled from 'styled-components';
 import { TaskProvider } from './context/TaskContext';
 import TaskTracker from './components/TaskTracker';
+
+const MainAppWrapper = styled.div`
+  width: 1000px;
+  background-color: lightgrey;
+`;
 
 const App: React.FC = () => {
   return (
     <TaskProvider>
-      <div style={{display: 'flex', height: '100vh', boxSizing: 'border-box'}}>
+      <MainAppWrapper>
         <TaskTracker/>
-      </div>
+      </MainAppWrapper>
     </TaskProvider>
   );
 };

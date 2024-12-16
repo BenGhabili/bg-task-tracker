@@ -1,5 +1,12 @@
 import React, {useContext} from 'react';
+import styled from 'styled-components';
 import { TaskContext } from '../context/TaskContext';
+import TaskItem from './TaskItem';
+
+const ListWrapper = styled.div`
+  min-width: 70%;
+  padding: 0 5px;
+`;
 
 
 const TaskList = () => {
@@ -9,11 +16,11 @@ const TaskList = () => {
   const { tasks } = taskContext;
 
   return (
-    <div>
+    <ListWrapper>
       {tasks.length > 0 && tasks.map(task => (
-        <div key={task.id}>{task.title}</div>
+        <TaskItem key={task.id} task={task} />
       ))}
-    </div>
+    </ListWrapper>
   );
 };
 

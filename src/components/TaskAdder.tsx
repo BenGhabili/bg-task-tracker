@@ -1,5 +1,10 @@
 import React, {useContext, useState} from 'react';
 import { TaskContext } from '../context/TaskContext';
+import styled from "styled-components";
+
+const FormWrapper = styled.div`
+  width: 30%;
+`;
 
 
 const TaskAdder: React.FC = () => {
@@ -30,7 +35,7 @@ const TaskAdder: React.FC = () => {
   };
 
   return (
-    <div style={{ width: '200px', padding: '1rem', borderRight: '1px solid #ccc' }}>
+    <FormWrapper>
       <h2>Add Task</h2>
       <form onSubmit={handleAdd}>
         <div>
@@ -61,7 +66,7 @@ const TaskAdder: React.FC = () => {
         </div>
         <button type="submit" style={{ marginTop: '1rem' }}>Add Task</button>
       </form>
-    </div>
+    </FormWrapper>
   );
 };
 

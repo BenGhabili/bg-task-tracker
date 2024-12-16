@@ -1,14 +1,19 @@
 import React from 'react';
+import styled from 'styled-components';
 import TaskAdder from './TaskAdder';
 import TaskList from './TaskList';
+
+const TrackerWrapper = styled.div`
+  display: flex;
+`;
 
 
 const TaskTracker = () => {
   return (
-    <div>
+    <TrackerWrapper>
       <TaskAdder />
       <TaskList />
-    </div>
+    </TrackerWrapper>
   );
 };
 
