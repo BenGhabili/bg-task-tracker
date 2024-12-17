@@ -1,18 +1,12 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
-import { Task } from '../types';
-import { TaskContext } from '../context/TaskContext';
+import type { Task } from '../../types';
+import { TaskContext } from '../../context/TaskContext';
+import { Card, PrimaryButton, DangerButton, CardHeader, CardFooter } from '../shared/styles/commonStyles';
+import { TaskPriority, TaskTitle, ButtonWrapper } from './styles/taskItemStyles';
 
 interface TaskItemProps {
   task: Task;
 }
-
-const TaskItemWrapper = styled.div`
-  border: 1px solid #000;
-  padding: 1rem;
-  margin: 0.5rem;
-  width: 150px;
-`;
 
 
 const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
@@ -43,7 +37,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
   };
 
   return (
-    <TaskItemWrapper>
+    <Card>
       {isEditing ? (
         <form onSubmit={handleSave}>
           <div>
@@ -76,16 +70,24 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
         </form>
       ) : (
         <>
-          <h3>{task.title}</h3>
-          <p>{task.description}</p>
-          <small>Priority: {task.priority}</small>
-          <div style={{marginTop: '0.5rem'}}>
-            <button onClick={() => setIsEditing(true)}>Edit</button>
-            <button onClick={() => deleteTask(task.id)}>Delete</button>
+          <CardHeader>
+            <TaskTitle>{task.title}</TaskTitle>
+            <TaskPriority priority={priority}>
+              <small>{task.priority}</small>
+            </TaskPriority>
+          </CardHeader>
+          <div>
+            <p>{task.description}</p>
           </div>
+          <CardFooter>
+            <ButtonWrapper>
+              <PrimaryButton onClick={() => setIsEditing(true)}>Edit</PrimaryButton>
+              <DangerButton onClick={() => deleteTask(task.id)}>Delete</DangerButton>
+            </ButtonWrapper>
+          </CardFooter>
         </>
       )}
-    </TaskItemWrapper>
+    </Card>
   );
 };
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { TaskProvider } from './context/TaskContext';
-import TaskTracker from './components/TaskTracker';
+import TaskTracker from './components/TaskTracker/TaskTracker';
 
 const MainAppWrapper = styled.div`
   width: 1000px;
