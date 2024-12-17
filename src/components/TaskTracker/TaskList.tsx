@@ -1,23 +1,33 @@
-import React, {useContext} from 'react';
-import styled from 'styled-components';
+import React, { useContext, useMemo } from 'react';
+import type { Task } from './types/TaskTrackerTypes';
 import { TaskContext } from '../../context/TaskContext';
+import { FilterContext } from '../../context/FilterContext';
 import TaskItem from './TaskItem';
-
-const ListWrapper = styled.div`
-  min-width: 70%;
-  padding: 0 5px;
-`;
-
+import { ListWrapper, ListHeader } from './styles/taskListStyles';
 
 const TaskList = () => {
   const taskContext = useContext(TaskContext);
-  if (!taskContext) throw new Error('TaskContext not found');
+  const filterContext = useContext(FilterContext);
+
+  if (!taskContext || !filterContext) {
+    throw new Error('Context not found');
+  }
 
   const { tasks } = taskContext;
+  const { filter } = filterContext;
+
+  const filteredTasks = useMemo(() => {
+    if (filter === 'All') {
+      return tasks;
+    }
+
+    return tasks.filter((task: Task) => task.priority === filter);
+  }, [tasks, filter]);
 
   return (
     <ListWrapper>
-      {tasks.length > 0 && tasks.map(task => (
+      <ListHeader />
+      {filteredTasks.length > 0 && filteredTasks.map(task => (
         <TaskItem key={task.id} task={task} />
       ))}
     </ListWrapper>

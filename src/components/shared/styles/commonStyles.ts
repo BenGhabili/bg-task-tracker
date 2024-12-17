@@ -64,3 +64,11 @@ export const CardFooter = styled.div`
   display: flex;
   justify-content: flex-end;
 `;
+
+export const Separator = styled.div`
+  height: 1px;
+  background-color: #e0e0e0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  margin: 16px 0;
+  width: 100%;
+`;

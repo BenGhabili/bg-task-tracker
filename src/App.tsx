@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { TaskProvider } from './context/TaskContext';
-import TaskTracker from './components/TaskTracker/TaskTracker';
+import TaskTracker from './components/TaskTracker';
 
 const MainAppWrapper = styled.div`
   width: 1000px;
@@ -10,11 +9,9 @@ const MainAppWrapper = styled.div`
 
 const App: React.FC = () => {
   return (
-    <TaskProvider>
-      <MainAppWrapper>
-        <TaskTracker/>
-      </MainAppWrapper>
-    </TaskProvider>
+    <MainAppWrapper>
+      <TaskTracker/>
+    </MainAppWrapper>
   );
 };
 

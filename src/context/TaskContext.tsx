@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState, ReactNode } from 'react';
-import { Task } from '../types';
+import { Task } from '../components/TaskTracker/types/TaskTrackerTypes';
 
 interface TaskContextValue {
   tasks: Task[];

@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
-import type { Task } from '../../types';
+import type { TaskItemProps, SubmitData } from './types/TaskTrackerTypes';
 import { TaskContext } from '../../context/TaskContext';
+import TaskForm from './TaskForm';
 import { Card, PrimaryButton, DangerButton, CardHeader, CardFooter } from '../shared/styles/commonStyles';
 import { TaskPriority, TaskTitle, ButtonWrapper } from './styles/taskItemStyles';
-
-interface TaskItemProps {
-  task: Task;
-}
 
 
 const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
@@ -19,60 +16,27 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
   const { editTask, deleteTask } = taskContext;
 
   const [isEditing, setIsEditing] = useState(false);
-  const [title, setTitle] = useState(task.title);
-  const [description, setDescription] = useState(task.description);
-  const [priority, setPriority] = useState(task.priority);
 
-  const handleSave = (e: React.FormEvent) => {
-    e.preventDefault();
-    editTask(task.id, { title, description, priority });
-    setIsEditing(false);
-  };
-
-  const handleCancel = () => {
-    setTitle(task.title);
-    setDescription(task.description);
-    setPriority(task.priority);
+  const handleSave = (data: SubmitData) => {
+    editTask(task.id, data);
     setIsEditing(false);
   };
 
   return (
     <Card>
       {isEditing ? (
-        <form onSubmit={handleSave}>
-          <div>
-            <label>Title: </label>
-            <input
-              type="text"
-              value={title}
-              onChange={e => setTitle(e.target.value)}
-            />
-          </div>
-          <div style={{ marginTop: '0.5rem' }}>
-            <label>Description: </label>
-            <textarea
-              value={description}
-              onChange={e => setDescription(e.target.value)}
-            />
-          </div>
-          <div style={{ marginTop: '0.5rem' }}>
-            <label>Priority: </label>
-            <select value={priority} onChange={e => setPriority(e.target.value as Task['priority'])}>
-              <option value="Low">Low</option>
-              <option value="Medium">Medium</option>
-              <option value="High">High</option>
-            </select>
-          </div>
-          <div style={{ marginTop: '1rem' }}>
-            <button type="submit">Save</button>
-            <button type="button" onClick={handleCancel} style={{ marginLeft: '1rem' }}>Cancel</button>
-          </div>
-        </form>
+        <TaskForm
+          initialTitle={task.title}
+          initialDescription={task.description}
+          initialPriority={task.priority}
+          onSubmit={handleSave}
+          onCancel={() => setIsEditing(false)}
+        />
       ) : (
         <>
           <CardHeader>
             <TaskTitle>{task.title}</TaskTitle>
-            <TaskPriority priority={priority}>
+            <TaskPriority $priority={task.priority}>
               <small>{task.priority}</small>
             </TaskPriority>
           </CardHeader>

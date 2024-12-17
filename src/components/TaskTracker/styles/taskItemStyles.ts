@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import type { Priority } from '../../../types';
+import type { Priority } from '../types/TaskTrackerTypes';
 import { PrimaryButton } from '../../shared/styles/commonStyles';
 
 export const TaskTitle = styled.h2`
@@ -9,14 +9,17 @@ export const TaskTitle = styled.h2`
   font-weight: normal;
 `;
 
-export const TaskPriority = styled.div<{ priority: Priority }>`
+export const TaskPriority = styled.div<{ $priority: Priority }>`
   display: flex;
   justify-content: center;
   border: 1px solid #000;
   border-radius: 10px;
   width: 50px;
   padding: 2px;
-  background-color: ${({ priority }) => priority === 'Low' ? 'green' : (priority === 'Medium' ? 'orange' : 'red')};
+  background-color: ${({ $priority }) =>
+    $priority === 'Low' ? 'green' :
+      ($priority === 'Medium' ? 'orange' : 'red')
+  };
 
   small {
     color: #fff;
