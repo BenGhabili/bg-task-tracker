@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import type { TaskItemProps, SubmitData } from './types/TaskTrackerTypes';
-import { TaskContext } from '../../context/TaskContext';
+import { useTaskContext } from '../../context/TaskContext';
 import TaskForm from './TaskForm';
 import { Card, PrimaryButton, DangerButton, CardHeader, CardFooter } from '../shared/styles/commonStyles';
 import { TaskPriority, TaskTitle, ButtonWrapper } from './styles/taskItemStyles';
 
 
 const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
-  const taskContext = React.useContext(TaskContext);
+  const taskContext = useTaskContext();
 
   if (!taskContext) {
     throw new Error('TaskContext not found');

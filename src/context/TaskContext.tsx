@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState, ReactNode } from 'react';
+import React, { createContext, useEffect, useState, ReactNode, useContext } from 'react';
 import { Task } from '../components/TaskTracker/types/TaskTrackerTypes';
 
 interface TaskContextValue {
@@ -13,6 +13,8 @@ export const TaskContext = createContext<TaskContextValue | undefined>(undefined
 interface TaskProviderProps {
   children: ReactNode;
 }
+
+export const useTaskContext = () => useContext(TaskContext);
 
 export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
   const [tasks, setTasks] = useState<Task[]>(() => {

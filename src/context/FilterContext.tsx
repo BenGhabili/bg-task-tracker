@@ -1,4 +1,4 @@
-import React, { createContext, useState, ReactNode } from 'react';
+import React, { createContext, useState, ReactNode, useContext } from 'react';
 import type { FilterValue } from '../components/TaskTracker/types/TaskTrackerTypes';
 
 interface FilterContextValue {

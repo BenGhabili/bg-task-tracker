@@ -16,8 +16,8 @@ const TaskFilter: React.FC = () => {
 
   return (
     <div>
-      <label>Filter by Priority: </label>
-      <Select value={filter} onChange={handleChange}>
+      <label htmlFor="priorityFilter">Filter by Priority:</label>
+      <Select id="priorityFilter" value={filter} onChange={handleChange}>
         <option value="All">All</option>
         <option value="Low">Low</option>
         <option value="Medium">Medium</option>

@@ -1,12 +1,12 @@
-import React, {useContext, useState} from 'react';
-import { TaskContext } from '../../context/TaskContext';
+import React, { useState } from 'react';
+import { useTaskContext } from '../../context/TaskContext';
 import TaskForm from './TaskForm';
 import type { SubmitData } from './types/TaskTrackerTypes';
 import { FormWrapper } from './styles/trackerStyles';
 
 const TaskAdder: React.FC = () => {
   const [resetTrigger, setResetTrigger] = useState(false);
-  const taskContext = useContext(TaskContext);
+  const taskContext = useTaskContext();
 
   if (!taskContext) {
     throw new Error('No task context');

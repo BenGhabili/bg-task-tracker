@@ -34,8 +34,9 @@ const TaskForm: React.FC<TaskFormProps> = ({
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label>Title: </label>
+        <label htmlFor="titleInput">Title:</label>
         <TextInput
+          id="titleInput"
           type="text"
           value={title}
           onChange={e => setTitle(e.target.value)}
@@ -43,17 +44,19 @@ const TaskForm: React.FC<TaskFormProps> = ({
         />
       </div>
 
-      <div style={{ marginTop: '0.5rem' }}>
-        <label>Description: </label>
+      <div>
+        <label htmlFor="descriptionInput">Description:</label>
         <TextArea
+          id="descriptionInput"
           value={description}
           onChange={e => setDescription(e.target.value)}
         />
       </div>
 
-      <div style={{ marginTop: '0.5rem' }}>
-        <label>Priority: </label>
+      <div>
+        <label htmlFor="prioritySelect">Priority:</label>
         <Select
+          id="prioritySelect"
           value={priority}
           onChange={e => setPriority(e.target.value as Priority)}
         >

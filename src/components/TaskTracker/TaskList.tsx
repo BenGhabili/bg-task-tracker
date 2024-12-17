@@ -1,12 +1,12 @@
 import React, { useContext, useMemo } from 'react';
 import type { Task } from './types/TaskTrackerTypes';
-import { TaskContext } from '../../context/TaskContext';
+import { useTaskContext } from '../../context/TaskContext';
 import { FilterContext } from '../../context/FilterContext';
 import TaskItem from './TaskItem';
 import { ListWrapper, ListHeader } from './styles/taskListStyles';
 
 const TaskList = () => {
-  const taskContext = useContext(TaskContext);
+  const taskContext = useTaskContext();
   const filterContext = useContext(FilterContext);
 
   if (!taskContext || !filterContext) {
