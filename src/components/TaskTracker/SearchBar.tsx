@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useFilterContext } from '../../context/FilterContext';
 import { TextInput } from '../shared/styles/elementStyles';
+import { DEBOUNCE_DELAY } from './constants';
 
-const DEBOUNCE_DELAY = 600;
 
 const SearchBar = () => {
   const { searchQuery, setSearchQuery } = useFilterContext();
@@ -26,6 +26,7 @@ const SearchBar = () => {
     <div style={{ marginTop: '10px'}}>
       <label htmlFor="search">Search Tasks: </label>
       <TextInput
+        data-testid="searchInput"
         id="search"
         value={localValue}
         onChange={handleChange}
