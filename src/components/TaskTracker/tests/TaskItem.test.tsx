@@ -48,7 +48,7 @@ describe('TaskItem', () => {
 
   it('renders the task correctly and also the delete button works as expected', () => {
     expect(screen.getByText('Sample Task')).toBeInTheDocument();
-    const deleteButton = screen.getByText('Delete');
+    const deleteButton = screen.getByTestId('delete-button');
     expect(deleteButton).toBeInTheDocument();
     fireEvent.click(deleteButton);
     expect(mockDeleteTask).toHaveBeenCalledTimes(1);
@@ -59,7 +59,7 @@ describe('TaskItem', () => {
   });
 
   it('shows TaskForm after clicking Edit', () => {
-    const editButton = screen.getByText('Edit');
+    const editButton = screen.getByTestId('edit-button');
 
     fireEvent.click(editButton);
     expect(screen.getByTestId('mocked-task-form')).toBeInTheDocument();

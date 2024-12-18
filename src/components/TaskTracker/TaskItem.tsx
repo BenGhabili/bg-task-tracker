@@ -57,10 +57,10 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
           </CardContent>
           <CardFooter>
             <ButtonWrapper>
-              <PrimaryButton onClick={() => setIsEditing(true)}>
+              <PrimaryButton data-testid="edit-button" onClick={() => setIsEditing(true)}>
                 <FontAwesomeIcon icon={faEdit} />
               </PrimaryButton>
-              <DangerButton onClick={() => deleteTask(task.id)}>
+              <DangerButton data-testid="delete-button" onClick={() => deleteTask(task.id)}>
                 <FontAwesomeIcon icon={faTrashAlt} />
               </DangerButton>
             </ButtonWrapper>
