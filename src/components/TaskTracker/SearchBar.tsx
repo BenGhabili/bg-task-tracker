@@ -1,27 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useFilterContext } from '../../context/FilterContext';
 import { TextInput } from '../shared/styles/elementStyles';
 
+const DEBOUNCE_DELAY = 600;
+
 const SearchBar = () => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const { searchQuery, setSearchQuery } = useFilterContext();
+  const [localValue, setLocalValue] = useState(searchQuery);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setSearchQuery(localValue);
+    }, DEBOUNCE_DELAY);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [localValue, setSearchQuery]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
+    setLocalValue(e.target.value);
   };
 
-  // if (error) {
-  //   return <div>Error occurred</div>;
-  // }
-  //
-  // if (loading) {
-  //   return <div>Loading</div>;
-  // }
-
   return (
-    <div>
+    <div style={{ marginTop: '10px'}}>
       <label htmlFor="search">Search Tasks: </label>
       <TextInput
         id="search"
-        value={searchQuery}
+        value={localValue}
         onChange={handleChange}
         placeholder="Search by title"
       />

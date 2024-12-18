@@ -1,28 +1,23 @@
 import React, { useContext, useMemo } from 'react';
-import type { Task } from './types/TaskTrackerTypes';
 import { useTaskContext } from '../../context/TaskContext';
-import { FilterContext } from '../../context/FilterContext';
+import { FilterContext, useFilterContext } from '../../context/FilterContext';
 import TaskItem from './TaskItem';
+import { filterTasks } from './helpers/FilterHelper';
 import { ListWrapper, ListHeader } from './styles/taskListStyles';
 
 const TaskList = () => {
   const taskContext = useTaskContext();
-  const filterContext = useContext(FilterContext);
+  const filterContext = useFilterContext();
 
   if (!taskContext || !filterContext) {
     throw new Error('Context not found');
   }
 
   const { tasks } = taskContext;
-  const { filter } = filterContext;
+  const { filter, searchQuery } = filterContext;
 
-  const filteredTasks = useMemo(() => {
-    if (filter === 'All') {
-      return tasks;
-    }
-
-    return tasks.filter((task: Task) => task.priority === filter);
-  }, [tasks, filter]);
+  const filteredTasks = useMemo(() =>
+    filterTasks(tasks, filter, searchQuery), [tasks, filter, searchQuery]);
 
   return (
     <ListWrapper>

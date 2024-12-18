@@ -5,16 +5,29 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import TaskList from '../TaskList';
-import { FilterContext } from '../../../context/FilterContext';
+import { FilterContext, useFilterContext } from '../../../context/FilterContext';
 import { useTaskContext } from '../../../context/TaskContext';
 import type { FilterValue } from '../types/TaskTrackerTypes';
+import { filterTasks } from '../helpers/FilterHelper';
 
 jest.mock('../../../context/TaskContext', () => ({
   ...jest.requireActual('../../../context/TaskContext'),
   useTaskContext: jest.fn(),
 }));
 
+jest.mock('../helpers/FilterHelper', () => ({
+  ...jest.requireActual('../helpers/FilterHelper'),
+  filterTasks: jest.fn(),
+}));
+
+jest.mock('../../../context/FilterContext', () => ({
+  ...jest.requireActual('../../../context/FilterContext'),
+  useFilterContext: jest.fn(),
+}));
+
 const mockUseTaskContext = useTaskContext as jest.Mock;
+const mockUseFilterContext = useFilterContext as jest.Mock;
+const mockFilterTasks = filterTasks as jest.Mock;
 
 const tasks = [
   { id: '1', title: 'Low Task', description: 'test low', priority: 'Low' as const },
@@ -22,9 +35,9 @@ const tasks = [
 ];
 
 
-const renderComponent = (filter: FilterValue) =>
+const renderComponent = () =>
   render(
-    <FilterContext.Provider value={{ filter, setFilter: jest.fn() }}>
+    <FilterContext.Provider value={{ filter: 'Low', setFilter: jest.fn(), searchQuery: 'foo', setSearchQuery: jest.fn()}}>
       <TaskList />
     </FilterContext.Provider>
   );
@@ -38,24 +51,31 @@ describe('TaskList', () => {
     jest.resetAllMocks();
   });
 
-  it('displays all tasks when filter is All', () => {
-    renderComponent('All');
+  it('displays all tasks when filter returns all values', () => {
+    mockUseFilterContext.mockReturnValue({
+      searchQuery: '',
+      setSearchQuery: jest.fn(),
+    })
+
+    mockFilterTasks.mockReturnValue(tasks);
+    render(<TaskList />);
 
     expect(screen.getByText('Low Task')).toBeInTheDocument();
     expect(screen.getByText('High Task')).toBeInTheDocument();
   });
 
-  it('displays only high priority tasks when filter is High', () => {
-    renderComponent('High');
+  it('calls the filter function with correct values', () => {
+    const mockFilter = 'Low';
+    const mockSearch = 'foo';
+    mockUseFilterContext.mockReturnValue({
+      searchQuery: mockSearch,
+      filter: mockFilter,
+    })
+    mockFilterTasks.mockReturnValue([]);
+    render(<TaskList />);
 
-    expect(screen.queryByText('Low Task')).not.toBeInTheDocument();
-    expect(screen.getByText('High Task')).toBeInTheDocument();
+    expect(mockFilterTasks).toHaveBeenCalledWith(tasks, mockFilter, mockSearch);
   });
 
-  it('displays no tasks if none match the filter', () => {
-    renderComponent('Medium');
 
-    expect(screen.queryByText('Low Task')).not.toBeInTheDocument();
-    expect(screen.queryByText('High Task')).not.toBeInTheDocument();
-  });
 });
