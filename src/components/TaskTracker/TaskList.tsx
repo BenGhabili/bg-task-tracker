@@ -13,7 +13,7 @@ const TaskList = () => {
     throw new Error('Context not found');
   }
 
-  const { tasks } = taskContext;
+  const { tasks, saveError } = taskContext;
   const { filter } = filterContext;
 
   const filteredTasks = useMemo(() => {
@@ -26,7 +26,9 @@ const TaskList = () => {
 
   return (
     <ListWrapper>
-      <ListHeader />
+      <ListHeader>
+        {saveError && <div>Error happened while saving your information, Could you refresh your screen and try again!</div>}
+      </ListHeader>
       {filteredTasks.length > 0 && filteredTasks.map(task => (
         <TaskItem key={task.id} task={task} />
       ))}

@@ -6,6 +6,7 @@ interface TaskContextValue {
   addTask: (task: Omit<Task, 'id'>) => void;
   editTask: (id: string, updatedFields: Partial<Omit<Task, 'id'>>) => void;
   deleteTask: (id: string) => void;
+  saveError: Error | null;
 }
 
 export const TaskContext = createContext<TaskContextValue | undefined>(undefined);
@@ -21,9 +22,18 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
     const saved = localStorage.getItem('tasks');
     return saved ? JSON.parse(saved) : [];
   });
+  const [error, setError] = useState<Error | null>(null);
+
+  const saveToLocalStorage = () => {
+    try {
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+    } catch (error) {
+      setError(new Error('Can not save to local storage'));
+    }
+  };
 
   useEffect(() => {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+    saveToLocalStorage();
   }, [tasks]);
 
   const addTask = (taskData: Omit<Task, 'id'>) => {
@@ -46,7 +56,7 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
   };
 
   return (
-    <TaskContext.Provider value={{ tasks, addTask, editTask, deleteTask }}>
+    <TaskContext.Provider value={{ tasks, addTask, editTask, deleteTask, saveError: error }}>
       {children}
     </TaskContext.Provider>
   );
