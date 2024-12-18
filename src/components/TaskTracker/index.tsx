@@ -1,13 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
 import { TaskProvider } from '../../context/TaskContext';
 import { FilterProvider } from '../../context/FilterContext';
 import TaskSideBar from './TaskSideBar';
 import TaskList from './TaskList';
-
-const TrackerWrapper = styled.div`
-  display: flex;
-`;
+import { TrackerWrapper } from './styles/trackerStyles';
 
 
 const TaskTracker = () => {

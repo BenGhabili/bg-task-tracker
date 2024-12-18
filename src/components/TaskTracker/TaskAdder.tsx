@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTaskContext } from '../../context/TaskContext';
 import TaskForm from './TaskForm';
 import type { SubmitData } from './types/TaskTrackerTypes';
-import { FormWrapper } from './styles/trackerStyles';
+import { FormWrapper, TaskAdderHeader } from './styles/trackerStyles';
 
 const TaskAdder: React.FC = () => {
   const [resetTrigger, setResetTrigger] = useState(false);
@@ -22,7 +22,9 @@ const TaskAdder: React.FC = () => {
 
   return (
     <FormWrapper>
-      <h2>Add Task</h2>
+      <TaskAdderHeader>
+        <h2>Add Task</h2>
+      </TaskAdderHeader>
       <TaskForm onSubmit={handleAdd} reset={resetTrigger}/>
     </FormWrapper>
   );

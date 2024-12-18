@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import TaskTracker from './components/TaskTracker';
 
 const MainAppWrapper = styled.div`
-  width: 1000px;
-  background-color: lightgrey;
+  display: flex;
+  justify-content: center;
 `;
 
 const App: React.FC = () => {

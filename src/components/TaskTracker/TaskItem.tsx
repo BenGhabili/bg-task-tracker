@@ -1,10 +1,22 @@
 import React, { useState } from 'react';
-import type { TaskItemProps, SubmitData } from './types/TaskTrackerTypes';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import type {TaskItemProps, SubmitData, Priority } from './types/TaskTrackerTypes';
 import { useTaskContext } from '../../context/TaskContext';
 import TaskForm from './TaskForm';
-import { Card, PrimaryButton, DangerButton, CardHeader, CardFooter } from '../shared/styles/commonStyles';
-import { TaskPriority, TaskTitle, ButtonWrapper } from './styles/taskItemStyles';
+import { Card, PrimaryButton, DangerButton, CardHeader, CardFooter, CardContent } from '../shared/styles/commonStyles';
+import { TaskPriority, TaskTitle, ButtonWrapper, TaskDescription } from './styles/taskItemStyles';
 
+const displayPriority = (priority: Priority) => {
+  switch (priority) {
+    case "Medium":
+      return 'M';
+    case "High":
+      return 'H';
+    default:
+      return 'L';
+  }
+};
 
 const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
   const taskContext = useTaskContext();
@@ -36,17 +48,21 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
         <>
           <CardHeader>
             <TaskTitle>{task.title}</TaskTitle>
-            <TaskPriority $priority={task.priority}>
-              <small>{task.priority}</small>
+            <TaskPriority $priority={displayPriority(task.priority)}>
+              <small>{displayPriority(task.priority)}</small>
             </TaskPriority>
           </CardHeader>
-          <div>
-            <p>{task.description}</p>
-          </div>
+          <CardContent>
+            <TaskDescription>{task.description}</TaskDescription>
+          </CardContent>
           <CardFooter>
             <ButtonWrapper>
-              <PrimaryButton onClick={() => setIsEditing(true)}>Edit</PrimaryButton>
-              <DangerButton onClick={() => deleteTask(task.id)}>Delete</DangerButton>
+              <PrimaryButton onClick={() => setIsEditing(true)}>
+                <FontAwesomeIcon icon={faEdit} />
+              </PrimaryButton>
+              <DangerButton onClick={() => deleteTask(task.id)}>
+                <FontAwesomeIcon icon={faTrashAlt} />
+              </DangerButton>
             </ButtonWrapper>
           </CardFooter>
         </>

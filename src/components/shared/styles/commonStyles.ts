@@ -9,7 +9,7 @@ const Button = styled.button`
   cursor: pointer;
   transition: background-color 0.3s ease, box-shadow 0.2s ease;
   color: #fff;
-  min-width: 100px;
+  width: 100px;
 
   &:hover {
     opacity: 0.9;
@@ -41,23 +41,31 @@ export const SecondaryButton = styled(Button)`
 `;
 
 export const DangerButton = styled(Button)`
-  background-color: #e74c3c; /* Red */
+  background-color: #f44336;
   &:hover {
     background-color: #c0392b; /* Darker Red */
   }
 `;
 
 export const Card = styled.div`
-  border: 1px solid #000;
-  border-radius: 5px;
-  padding: 1rem;
-  margin: 0.5rem;
+  margin-bottom: 0.5rem;
+
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  padding: 16px;
+  max-width: 100%;
+
+  @media (max-width: 768px) {
+    padding: 10px;
+  }
 `;
 
 export const CardHeader = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 `;
 
 export const CardFooter = styled.div`
@@ -71,4 +79,16 @@ export const Separator = styled.div`
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   margin: 16px 0;
   width: 100%;
+`;
+
+export const CardContent = styled.div`
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  margin: 10px 0;
+  width: 700px;
+
+  @media (max-width: 768px) {
+    padding: 10px;
+    width: 250px;
+  }
 `;

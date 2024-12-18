@@ -27,7 +27,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title.trim()) return; // basic validation
+    if (!title.trim()) return;
     onSubmit({ title, description, priority });
   };
 
@@ -39,9 +39,13 @@ const TaskForm: React.FC<TaskFormProps> = ({
           id="titleInput"
           type="text"
           value={title}
+          maxLength={50}
           onChange={e => setTitle(e.target.value)}
           required
         />
+        <div>
+          {title.length} / 50
+        </div>
       </div>
 
       <div>
