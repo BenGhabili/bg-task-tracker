@@ -16,7 +16,7 @@ describe('TaskFilter', () => {
     }
 
     const MockFilterProvider: React.FC<MockFilterProviderProps> = ({ children }) => (
-      <FilterContext.Provider value={{ filter: 'All' as FilterValue, setFilter: mockSetFilter }}>
+      <FilterContext.Provider value={{ filter: 'All' as FilterValue, setFilter: mockSetFilter, searchQuery: '' , setSearchQuery: jest.fn() }}>
         {children}
       </FilterContext.Provider>
     );
