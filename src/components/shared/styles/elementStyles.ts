@@ -26,7 +26,7 @@ export const TextInput = styled.input`
 
 export const TextArea = styled.textarea`
   ${baseInputStyles};
-  resize: vertical;
+  resize: none;
   min-height: 100px;
 `;
 
